@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Alticci Sequence</title>
+	<style>
+		.tittle {
+			color: white;
+			text-align: center;
+		}
+
+		.card {
+			background-color: #333;
+			padding: 20px;
+			border-radius: 10px;
+			width: 50%;
+			margin: 0 auto;
+		}
+
+		input[type="number"] {
+			background-color: white;
+			border: none;
+			padding: 12px;
+			border-radius: 10px;
+			margin-bottom: 20px;
+			margin-top: 20px;
+			;
+			width: 96%;
+		}
+
+		input[type="submit"] {
+			background-color: black;
+			color: white;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			width: 100%;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #555;
+		}
+	</style>
+	<script>
+		function calculateSequence() {
+			let inputNumber = document.getElementById("inputNumber").value;
+			if (!inputNumber) {
+				alert('Number is required!')
+				return
+			}
+			fetch("http://localhost:8080/alticci/" + inputNumber)
+				.then(response => response.json())
+				.then(data => {
+					if (data.message) {
+						alert(data.message)
+						return
+					}
+					let x = document.getElementById("result");
+					document.getElementById("result").value = data.result;
+				})
+				.catch((err) => {
+					err => err.json()
+					console.log(err);
+				});
+		}
+	</script>
+</head>
+
+<body>
+	<div class="card">
+		<h1 class="tittle">Alticci Sequence</h1>
+		<input id="inputNumber" type="number" placeholder="Enter the number">
+		<input type="submit" value="Submit" onclick="calculateSequence()">
+		<input id="result" readonly type="number" placeholder="Result">
+	</div>
+</body>
+
+</html lang="en">
